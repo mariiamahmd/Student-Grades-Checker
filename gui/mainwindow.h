@@ -1,0 +1,25 @@
+#pragma once
+
+#include <QMainWindow>
+
+QT_BEGIN_NAMESPACE
+namespace Ui { class MainWindow; }
+QT_END_NAMESPACE
+
+class MainWindow : public QMainWindow
+{
+    Q_OBJECT
+
+public:
+    MainWindow(QWidget *parent = nullptr);
+    ~MainWindow();
+
+private slots:
+    void onRoleSelected(int roleIndex);
+    void onLecturerTabChanged(int index);
+    void handleAddCourse();
+    void handleRecordGrade();
+
+private:
+    Ui::MainWindow *ui; // This connects to your .ui file!
+};

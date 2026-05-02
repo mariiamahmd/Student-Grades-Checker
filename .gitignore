@@ -1,0 +1,8 @@
+# Qt Creator specific files and folders
+.qtcreator/
+*.user
+CMakeLists.txt.user
+
+# Build directories
+build/
+build-*/

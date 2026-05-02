@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>719</width>
+    <height>567</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QStackedWidget" name="mainStack">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="page">
+       <widget class="QLabel" name="label">
+        <property name="geometry">
+         <rect>
+          <x>120</x>
+          <y>90</y>
+          <width>251</width>
+          <height>91</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Welcome to Students Grades Checker</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="studentBtn">
+        <property name="geometry">
+         <rect>
+          <x>120</x>
+          <y>240</y>
+          <width>80</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>I am a Student</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="lecturerBtn">
+        <property name="geometry">
+         <rect>
+          <x>270</x>
+          <y>230</y>
+          <width>80</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>I am a Lecturer</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="page_2"/>
+      <widget class="QWidget" name="page_3">
+       <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,1">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <widget class="QListWidget" name="sidebarMenu">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>450</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>150</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QListWidget::item {
+    padding: 30px 5px;
+}</string>
+            </property>
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item>
+             <property name="text">
+              <string>Courses Manager</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Rankings</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Statistics</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Orientation::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="lecturerLogoutBtn">
+            <property name="maximumSize">
+             <size>
+              <width>150</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Log Out</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QStackedWidget" name="lecturerPanes">
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <widget class="QWidget" name="page_4">
+           <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+             <widget class="QPushButton" name="btnOpenAssginLecturer">
+              <property name="text">
+               <string>Assign Lecturer</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnOpenAddCourse">
+              <property name="text">
+               <string>Add New Course</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btnOpenInputGrade">
+              <property name="text">
+               <string>Input Student Grade</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="page_5"/>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>719</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

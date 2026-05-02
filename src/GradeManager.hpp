@@ -1,10 +1,12 @@
 #pragma once
 
+#include "Types.hpp"
 #include "Student.hpp"
 #include "Course.hpp"
 #include "Lecturer.hpp"
 #include <vector>
 #include <string>
+#include <map>
 
 // Node structure declaration for the Binary Search Tree
 struct TreeNode
@@ -22,7 +24,7 @@ private:
     TreeNode *root; // Root of the Student BST
 
     // Master lists for the other entities
-    std::vector<Course> courses;
+    std::map<std::string, Course> coursesID;
     std::vector<Lecturer> lecturers;
 
     // Private helper functions for recursive BST operations
