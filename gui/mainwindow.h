@@ -15,10 +15,12 @@ public:
     ~MainWindow();
 
 private slots:
-    void onRoleSelected(int roleIndex);
+
     void onLecturerTabChanged(int index);
     void handleAddCourse();
     void handleRecordGrade();
+
+
 
 private:
     Ui::MainWindow *ui; // This connects to your .ui file!

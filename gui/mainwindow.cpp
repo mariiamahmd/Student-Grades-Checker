@@ -7,13 +7,17 @@
 #include "inputgradedialog.h"
 
 #include <QMessageBox>
-
+#include <QPushButton>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
+    this->setStyleSheet(R"(
+    QWidget { background-color: white; }
+    QFrame { background-color: white; border-radius: 12px; }
+)");
     // ==========================================
     // 0. STARTUP STATE
     // ==========================================
@@ -25,13 +29,8 @@ MainWindow::MainWindow(QWidget *parent)
     // 1. ROLE SELECTION (The Welcome Screen)
     // ==========================================
     // Click "I am a Student" -> switch mainStack to page_2 (Index 1)
-    connect(ui->studentBtn, &QPushButton::clicked, this, [this]() {
+    connect(ui->btn_student, &QPushButton::clicked, this, [this]() {
         ui->mainStack->setCurrentIndex(1);
-    });
-
-    // Click "I am a Lecturer" -> switch mainStack to page_3 (Index 2)
-    connect(ui->lecturerBtn, &QPushButton::clicked, this, [this]() {
-        ui->mainStack->setCurrentIndex(2);
     });
 
     // Logout Button (Inside Lecturer View) -> switch back to Welcome Screen (Index 0)
@@ -74,9 +73,6 @@ MainWindow::~MainWindow()
 // 4. THE SLOT IMPLEMENTATIONS
 // ==========================================
 
-void MainWindow::onRoleSelected(int index) {
-    // Kept empty to satisfy compiler if it's still in your header
-}
 
 void MainWindow::onLecturerTabChanged(int index) {
     // Kept empty to satisfy compiler if it's still in your header
@@ -95,3 +91,5 @@ void MainWindow::handleRecordGrade() {
         QMessageBox::information(this, "Success", "Student Grade Recorded!");
     }
 }
+
+

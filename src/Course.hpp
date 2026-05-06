@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Types.hpp"
 #include "Lecturer.hpp"
+#include "Types.hpp"
+#include <queue>
 #include <string>
 #include <vector>
-#include <queue>
 
 class Course
 {
@@ -17,7 +17,10 @@ private:
 
 public:
     // Constructor prototype
-    Course(int cHours, const std::string &code, const std::string &name, Lecturer *lecturer = nullptr);
+    Course(int cHours,
+           const std::string &code,
+           const std::string &name,
+           Lecturer *lecturer = nullptr);
 
     // Method prototypes
     void addStudentGrade(int id, const std::string &name, double grade);

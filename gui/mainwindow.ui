@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>719</width>
-    <height>567</height>
+    <height>589</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,41 +24,354 @@
        <widget class="QLabel" name="label">
         <property name="geometry">
          <rect>
-          <x>120</x>
-          <y>90</y>
-          <width>251</width>
-          <height>91</height>
+          <x>300</x>
+          <y>20</y>
+          <width>131</width>
+          <height>61</height>
          </rect>
         </property>
         <property name="text">
-         <string>Welcome to Students Grades Checker</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; color:#110074;&quot;&gt;Welcome To&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="studentBtn">
+       <widget class="QLabel" name="label_2">
         <property name="geometry">
          <rect>
-          <x>120</x>
-          <y>240</y>
-          <width>80</width>
-          <height>24</height>
+          <x>170</x>
+          <y>70</y>
+          <width>441</width>
+          <height>41</height>
          </rect>
         </property>
         <property name="text">
-         <string>I am a Student</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt; font-weight:700; color:#00136a;&quot;&gt;Student Grade Checker System&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="lecturerBtn">
+       <widget class="QLabel" name="label_3">
         <property name="geometry">
          <rect>
-          <x>270</x>
-          <y>230</y>
-          <width>80</width>
-          <height>24</height>
+          <x>240</x>
+          <y>100</y>
+          <width>271</width>
+          <height>61</height>
          </rect>
         </property>
         <property name="text">
-         <string>I am a Lecturer</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; color:#110074;&quot;&gt;Who is using this system?&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
+       </widget>
+       <widget class="QWidget" name="horizontalLayoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>200</y>
+          <width>631</width>
+          <height>291</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QFrame" name="frame">
+           <property name="styleSheet">
+            <string notr="true">border: none;</string>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::Shape::NoFrame</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Shadow::Raised</enum>
+           </property>
+           <widget class="QFrame" name="frame_2">
+            <property name="geometry">
+             <rect>
+              <x>40</x>
+              <y>0</y>
+              <width>241</width>
+              <height>291</height>
+             </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">  background-color: #f5f5f5;
+    border-radius: 10px;
+    border: 1px solid #ccc;</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::Box</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Shadow::Plain</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <property name="leftMargin">
+              <number>10</number>
+             </property>
+             <property name="topMargin">
+              <number>10</number>
+             </property>
+             <property name="rightMargin">
+              <number>10</number>
+             </property>
+             <property name="bottomMargin">
+              <number>10</number>
+             </property>
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_3">
+               <item>
+                <spacer name="verticalSpacer_2">
+                 <property name="orientation">
+                  <enum>Qt::Orientation::Vertical</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Policy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>63</width>
+                   <height>12</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_4">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">border:none</string>
+                 </property>
+                 <property name="frameShape">
+                  <enum>QFrame::Shape::NoFrame</enum>
+                 </property>
+                 <property name="text">
+                  <string>&lt;html&gt;
+&lt;head/&gt;
+&lt;body&gt;
+
+&lt;p align=&quot;center&quot; style=&quot;margin:0;&quot;&gt;
+&lt;span style=&quot;font-size:23pt;&quot;&gt;🎓&lt;/span&gt;
+&lt;/p&gt;
+
+&lt;p align=&quot;center&quot; style=&quot;margin:0; line-height:80%;&quot;&gt;
+&lt;span style=&quot;font-size:19pt; font-weight:700; color:#1d16f2;&quot;&gt;I am a&lt;/span&gt;
+&lt;/p&gt;
+
+&lt;p align=&quot;center&quot; style=&quot;margin:0; line-height:80%;&quot;&gt;
+&lt;span style=&quot;font-size:21pt; font-weight:700; color:#1d16f2;&quot;&gt;Student&lt;/span&gt;
+&lt;/p&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_5">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">border:none</string>
+                 </property>
+                 <property name="text">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; color:#000000;&quot;&gt;view courses, grades&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; color:#000000;&quot;&gt;and academic history&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                 <property name="textFormat">
+                  <enum>Qt::TextFormat::MarkdownText</enum>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="verticalSpacer_3">
+                 <property name="orientation">
+                  <enum>Qt::Orientation::Vertical</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Policy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>10</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
+                <widget class="QPushButton" name="btn_student">
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton {
+    background-color: #4A90E2;
+    color: white;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+QPushButton:hover {
+    background-color: #357ABD;
+}
+
+QPushButton:pressed {
+    background-color: #2C5F9E;
+}</string>
+                 </property>
+                 <property name="text">
+                  <string>Continue as a Student -&gt;</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QFrame" name="frame_3">
+            <property name="geometry">
+             <rect>
+              <x>360</x>
+              <y>0</y>
+              <width>241</width>
+              <height>291</height>
+             </rect>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">  background-color: #f5f5f5;
+    border-radius: 10px;
+    border: 1px solid #ccc;</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Shape::Box</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Shadow::Plain</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_5">
+             <property name="leftMargin">
+              <number>10</number>
+             </property>
+             <property name="topMargin">
+              <number>10</number>
+             </property>
+             <property name="rightMargin">
+              <number>10</number>
+             </property>
+             <property name="bottomMargin">
+              <number>10</number>
+             </property>
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_6">
+               <item>
+                <spacer name="verticalSpacer_4">
+                 <property name="orientation">
+                  <enum>Qt::Orientation::Vertical</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Policy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>63</width>
+                   <height>12</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_6">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">border:none</string>
+                 </property>
+                 <property name="frameShape">
+                  <enum>QFrame::Shape::NoFrame</enum>
+                 </property>
+                 <property name="text">
+                  <string>&lt;html&gt;
+&lt;head/&gt;
+&lt;body&gt;
+
+&lt;p align=&quot;center&quot; style=&quot;margin:0;&quot;&gt;
+&lt;span style=&quot;font-size:23pt;&quot;&gt;👩‍🏫&lt;/span&gt;
+&lt;/p&gt;
+
+&lt;p align=&quot;center&quot; style=&quot;margin:0; line-height:80%;&quot;&gt;
+&lt;span style=&quot;font-size:19pt; font-weight:700; color:#1d16f2;&quot;&gt;I am a&lt;/span&gt;
+&lt;/p&gt;
+
+&lt;p align=&quot;center&quot; style=&quot;margin:0; line-height:80%;&quot;&gt;
+&lt;span style=&quot;font-size:21pt; font-weight:700; color:#1d16f2;&quot;&gt;Instructor&lt;/span&gt;
+&lt;/p&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_7">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">border:none</string>
+                 </property>
+                 <property name="text">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; color:#000000;&quot;&gt;Manage students , courses&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:11pt; color:#000000;&quot;&gt;lecturers and system data&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                 <property name="textFormat">
+                  <enum>Qt::TextFormat::MarkdownText</enum>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="verticalSpacer_5">
+                 <property name="orientation">
+                  <enum>Qt::Orientation::Vertical</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Policy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>10</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
+                <widget class="QPushButton" name="btn_instructor">
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton {
+    background-color: #4A90E2;
+    color: white;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+QPushButton:hover {
+    background-color: #357ABD;
+}
+
+QPushButton:pressed {
+    background-color: #2C5F9E;
+}</string>
+                 </property>
+                 <property name="text">
+                  <string>Continue as a Instructor -&gt;</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </widget>
       <widget class="QWidget" name="page_2"/>
@@ -190,7 +503,7 @@
      <x>0</x>
      <y>0</y>
      <width>719</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

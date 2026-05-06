@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Types.hpp"
-#include "Student.hpp"
 #include "Course.hpp"
 #include "Lecturer.hpp"
-#include <vector>
-#include <string>
+#include "Student.hpp"
+#include "Types.hpp"
 #include <map>
+#include <string>
+#include <vector>
 
 // Node structure declaration for the Binary Search Tree
 struct TreeNode

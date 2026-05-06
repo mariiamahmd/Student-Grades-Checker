@@ -2,8 +2,8 @@
 
 #include "Types.hpp"
 #include <string>
-#include <vector>
 #include <utility> // Required for std::pair
+#include <vector>
 
 class Student
 {
