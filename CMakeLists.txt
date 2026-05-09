@@ -49,6 +49,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(StudentGradeChecker
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        gui/instructor.h gui/instructor.cpp gui/instructor.ui
+
     )
 # Define target properties for Android with Qt 6 as:
 #   set_property(TARGET StudentGradeChecker APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -69,7 +71,9 @@ else()
 endif()
 
 target_link_libraries(StudentGradeChecker PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
-
+target_include_directories(StudentGradeChecker PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/gui
+)
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
 # explicit, fixed bundle identifier manually though.
