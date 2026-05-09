@@ -1,11 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
 // Include the headers for your three pop-up windows
 #include "addcoursedialog.h"
 #include "assignlecturerdialog.h"
 #include "inputgradedialog.h"
-
+#include "instructor.h"
 #include <QMessageBox>
 #include <QPushButton>
 MainWindow::MainWindow(QWidget *parent)
@@ -14,6 +13,12 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    connect(ui->btn_instructor, &QPushButton::clicked, this, [=](){
+
+        Instructor *ins = new Instructor();
+        ins->show();
+
+    });
     this->setStyleSheet(R"(
     QWidget { background-color: white; }
     QFrame { background-color: white; border-radius: 12px; }
@@ -34,8 +39,8 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
     // Logout Button (Inside Lecturer View) -> switch back to Welcome Screen (Index 0)
-    connect(ui->lecturerLogoutBtn, &QPushButton::clicked, this, [this]() {
-        ui->mainStack->setCurrentIndex(0);
+    connect(ui->btn_instructor, &QPushButton::clicked, this, [this]() {
+        ui->mainStack->setCurrentWidget(ui->page_5);
     });
 
 
