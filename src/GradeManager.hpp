@@ -15,17 +15,17 @@ struct TreeNode
     TreeNode *left;
     TreeNode *right;
     // Constructor prototype
-    TreeNode(Student &s);
+    TreeNode(const Student &s);
 };
 
 class GradeManager
 {
 private:
-    TreeNode *root; // Root of the Student BST
+    TreeNode *root; // Root of the Student BST (Ordered by Student ID)
 
     // Master lists for the other entities
     std::map<std::string, Course> coursesID;
-    std::vector<Lecturer> lecturers;
+    std::unordered_map<int, Lecturer> lecturers;
 
     // Private helper functions for recursive BST operations
     TreeNode *insertHelper(TreeNode *node, const Student &newStudent);
@@ -49,4 +49,7 @@ public:
     void addLecturer(int id, std::string name, const std::string &dept);
     void assignLecturerToCourse(int lecturerId, const std::string &courseCode);
     void recordGradeForCourse(const std::string &courseCode, int studentId, double grade);
+
+    // Combines the ID/Grade from Course with the Name from the Student BST
+    std::vector<StudentScore> getTopStudentsReport(const std::string &courseCode, int topN) const;
 };

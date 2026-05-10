@@ -1,11 +1,10 @@
-#ifndef INSTRUCTOR_H
-#define INSTRUCTOR_H
+#pragma once
 
 #include <QWidget>
 
-namespace Ui {
-class Instructor;
-}
+QT_BEGIN_NAMESPACE
+namespace Ui { class Instructor; }
+QT_END_NAMESPACE
 
 class Instructor : public QWidget
 {
@@ -15,8 +14,13 @@ public:
     explicit Instructor(QWidget *parent = nullptr);
     ~Instructor();
 
+private slots:
+    // UI-only slot to open the pop-up dialog
+    void on_btn_addCourse_clicked();
+
 private:
     Ui::Instructor *ui;
-};
 
-#endif // INSTRUCTOR_H
+    // Helper function to apply visual tweaks to the table
+    void setupCoursesTable();
+};
