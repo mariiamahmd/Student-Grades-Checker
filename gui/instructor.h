@@ -15,12 +15,12 @@ public:
     ~Instructor();
 
 private slots:
-    // UI-only slot to open the pop-up dialog
     void on_btn_addCourse_clicked();
+    void on_btn_addLecturer_clicked();
 
 private:
     Ui::Instructor *ui;
-
-    // Helper function to apply visual tweaks to the table
+    
     void setupCoursesTable();
+    void setupLecturersTable();
 };
