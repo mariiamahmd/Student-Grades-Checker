@@ -3,6 +3,7 @@
 
 using namespace std;
 
+
 GradeManager::GradeManager() : root(nullptr) {}
 
 GradeManager::~GradeManager() {
