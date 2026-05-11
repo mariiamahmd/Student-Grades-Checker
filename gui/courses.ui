@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CoursesPage</class>
+ <widget class="QWidget" name="CoursesPage">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>950</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="styleSheet">
+   <string>QWidget#CoursesPage { background-color: #f3f4f6; }</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout_Main">
+   <property name="spacing">
+    <number>20</number>
+   </property>
+   <property name="leftMargin">
+    <number>20</number>
+   </property>
+   <property name="topMargin">
+    <number>20</number>
+   </property>
+   <property name="rightMargin">
+    <number>20</number>
+   </property>
+   <property name="bottomMargin">
+    <number>20</number>
+   </property>
+   <item>
+    <widget class="QFrame" name="frame_Operations">
+     <property name="minimumSize">
+      <size>
+       <width>250</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>250</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string>
+       QFrame#frame_Operations {
+           background-color: white;
+           border-radius: 10px;
+       }
+       QPushButton {
+           color: white;
+           font-weight: bold;
+           font-size: 14px;
+           border-radius: 6px;
+           padding: 12px;
+           text-align: left;
+           padding-left: 20px;
+       }
+       QPushButton#btn_addCourse { background-color: #1d4ed8; }
+       QPushButton#btn_addCourse:hover { background-color: #1e40af; }
+       
+       QPushButton#btn_assignLecturer { background-color: #4ade80; color: #064e3b; }
+       QPushButton#btn_assignLecturer:hover { background-color: #22c55e; }
+       
+       QPushButton#btn_updateCourse { background-color: #f59e0b; }
+       QPushButton#btn_updateCourse:hover { background-color: #d97706; }
+       
+       QPushButton#btn_deleteCourse { background-color: #ef4444; }
+       QPushButton#btn_deleteCourse:hover { background-color: #dc2626; }
+      </string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_Ops">
+      <property name="spacing">
+       <number>15</number>
+      </property>
+      <property name="leftMargin">
+       <number>20</number>
+      </property>
+      <property name="topMargin">
+       <number>30</number>
+      </property>
+      <property name="rightMargin">
+       <number>20</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="label_OpsTitle">
+        <property name="styleSheet">
+         <string>font-weight: bold; font-size: 14px; color: #111827;</string>
+        </property>
+        <property name="text">
+         <string>Course Operations</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer_small">
+        <property name="orientation">
+         <enum>Qt::Orientation::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>10</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_addCourse">
+        <property name="text">
+         <string>+ Add New Course</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_assignLecturer">
+        <property name="text">
+         <string>🔍 Assign Lecturer</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_updateCourse">
+        <property name="text">
+         <string>✏️ Update Course</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_deleteCourse">
+        <property name="text">
+         <string>🗑️ Delete Course</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer_large">
+        <property name="orientation">
+         <enum>Qt::Orientation::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>200</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QFrame" name="frame_Data">
+     <property name="styleSheet">
+      <string notr="true">QFrame#frame_Data {
+    background-color: white;
+    border-radius: 10px;
+}
+QLineEdit {
+    padding: 8px;
+    border: 1px solid #e5e7eb;
+    border-radius: 5px;
+    background-color: #f9fafb;
+    color: #111827; 
+}</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_Data">
+      <property name="leftMargin">
+       <number>20</number>
+      </property>
+      <property name="topMargin">
+       <number>20</number>
+      </property>
+      <property name="rightMargin">
+       <number>20</number>
+      </property>
+      <property name="bottomMargin">
+       <number>20</number>
+      </property>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_TopBar">
+        <item>
+         <widget class="QLabel" name="label_TableTitle">
+          <property name="styleSheet">
+           <string>font-weight: bold; font-size: 16px; color: #111827;</string>
+          </property>
+          <property name="text">
+           <string>All Courses (Total: 0)</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_TitleSearch">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lineEdit_Search">
+          <property name="minimumSize">
+           <size>
+            <width>250</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="placeholderText">
+           <string>Search by Code or Name...</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QTableWidget" name="coursesTable">
+        <property name="styleSheet">
+         <string notr="true">QTableWidget {
+    background-color: white;
+    border: none;
+    gridline-color: #f3f4f6;
+    font-size: 13px;
+    color: #374151;
+}
+QTableWidget::viewport {
+    background-color: white;
+}
+QHeaderView::section {
+    background-color: white;
+    color: #111827;
+    font-weight: bold;
+    padding: 10px;
+    border: none;
+    border-bottom: 2px solid #e5e7eb;
+}
+QTableWidget::item {
+    padding: 5px;
+    border-bottom: 1px solid #f3f4f6;
+    background-color: white;
+    color: #111827;
+}
+QTableWidget::item:selected {
+    background-color: #eff6ff;
+    color: #1d4ed8;
+}</string>
+        </property>
+        <property name="alternatingRowColors">
+         <bool>false</bool>
+        </property>
+        <property name="selectionBehavior">
+         <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+        </property>
+        <property name="showGrid">
+         <bool>false</bool>
+        </property>
+        <attribute name="horizontalHeaderStretchLastSection">
+         <bool>true</bool>
+        </attribute>
+        <attribute name="verticalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
+        <column>
+         <property name="text">
+          <string>Course Code</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Course Name</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Credit Hours</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Assigned Lecturer</string>
+         </property>
+        </column>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_BottomBar">
+        <item>
+         <widget class="QLabel" name="label_Showing">
+          <property name="styleSheet">
+           <string>color: #6b7280; font-size: 12px;</string>
+          </property>
+          <property name="text">
+           <string>Showing 0 to 0 of 0 courses</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_Pagination">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
