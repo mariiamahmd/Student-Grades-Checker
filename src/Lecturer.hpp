@@ -19,5 +19,5 @@ public:
     const std::string &getDepartment() const;
 
     // Display prototype
-    void displayInfo() const;
+    // void displayInfo() const;
 };
