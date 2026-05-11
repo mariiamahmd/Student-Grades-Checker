@@ -1,13 +1,18 @@
 #include "instructor.h"
 #include "ui_instructor.h"
-#include "addcoursedialog.h" 
+#include "addcoursedialog.h"
+#include "../src/GradeManager.hpp"
+
 #include <QTableWidgetItem>
 #include <QHeaderView>
 #include <QMessageBox>
+#include <algorithm> // Needed for std::sort
 
-Instructor::Instructor(QWidget *parent)
+// Update constructor to accept the backend pointer
+Instructor::Instructor(GradeManager* backendPtr, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Instructor)
+    , backend(backendPtr) // <-- Save the database reference
 {
     ui->setupUi(this);
 
@@ -34,6 +39,9 @@ Instructor::Instructor(QWidget *parent)
     // Report Sub-navigation
     connect(ui->btn_top, &QPushButton::clicked, this, [this]() {
         ui->reportstack->setCurrentWidget(ui->topstudentP);
+        
+        // <-- NEW: Trigger the sorting and UI population when tab opens
+        populateTopStudentsReport(); 
     });
     connect(ui->btn_pass, &QPushButton::clicked, this, [this]() {
         ui->reportstack->setCurrentWidget(ui->passfaillp);
@@ -49,10 +57,12 @@ Instructor::Instructor(QWidget *parent)
     // Connect Buttons
     connect(ui->btn_addCourse, &QPushButton::clicked, this, &Instructor::on_btn_addCourse_clicked);
     connect(ui->btn_addLecturer, &QPushButton::clicked, this, &Instructor::on_btn_addLecturer_clicked);
+    connect(ui->btn_addStudent, &QPushButton::clicked, this, &Instructor::on_btn_addStudent_clicked);
 
     // Run Visual Setups
     setupCoursesTable();
     setupLecturersTable();
+    setupStudentsTable();
 }
 
 Instructor::~Instructor()
@@ -66,9 +76,7 @@ Instructor::~Instructor()
 
 void Instructor::setupCoursesTable()
 {
-    // ==========================================
     // FORCE LIGHT MODE COLORS FOR COURSES TAB
-    // ==========================================
     ui->lineEdit_Search->setStyleSheet(
         "QLineEdit {"
         "  color: #111827;" 
@@ -86,9 +94,8 @@ void Instructor::setupCoursesTable()
         "QTableWidget::item { background-color: white; color: #111827; }"
         "QTableWidget::item:selected { background-color: #eff6ff; color: #1d4ed8; }"
     );
-    // ==========================================
 
-    // Your existing setup code continues here...
+    // Table settings
     ui->coursesTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->coursesTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
@@ -120,8 +127,77 @@ void Instructor::setupLecturersTable()
     ui->label_ShowingLec->setText("Showing 1 to 1 of 1 lecturers");
 }
 
+void Instructor::setupStudentsTable()
+{
+    // 1. Force Light Mode Colors
+    ui->lineEdit_SearchStu->setStyleSheet(
+        "QLineEdit { color: #111827; background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 5px; padding: 8px; }"
+    );
+    ui->studentsTable->setStyleSheet(
+        "QTableWidget { background-color: white; color: #374151; gridline-color: #f3f4f6; border: none; }"
+        "QTableWidget::viewport { background-color: white; }"
+        "QHeaderView::section { background-color: white; color: #111827; font-weight: bold; border: none; border-bottom: 2px solid #e5e7eb; }"
+        "QTableWidget::item { background-color: white; color: #111827; }"
+        "QTableWidget::item:selected { background-color: #eff6ff; color: #1d4ed8; }"
+    );
+
+    // 2. Format columns
+    ui->studentsTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->studentsTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+    // 3. DYNAMIC DATA INTEGRATION
+    std::vector<Student*> allStudents = backend->getAllStudents();
+    ui->studentsTable->setRowCount(allStudents.size());
+    
+    for (size_t i = 0; i < allStudents.size(); ++i) {
+        Student* s = allStudents[i];
+        QString gpaStr = QString::number(s->calculateCumulativeGPA(), 'f', 2);
+        
+        ui->studentsTable->setItem(i, 0, new QTableWidgetItem(QString::number(s->getID())));
+        ui->studentsTable->setItem(i, 1, new QTableWidgetItem(QString::fromStdString(s->getName())));
+        ui->studentsTable->setItem(i, 2, new QTableWidgetItem("General")); // Placeholder for Dept
+        ui->studentsTable->setItem(i, 3, new QTableWidgetItem(gpaStr));
+        ui->studentsTable->setItem(i, 4, new QTableWidgetItem("Active"));
+    }
+}
+
 // ==========================================
-// 4. Button Click Events
+// 4. Report Integration
+// ==========================================
+void Instructor::populateTopStudentsReport()
+{
+    // 1. Get the flat list of pointers from the BST
+    std::vector<Student*> students = backend->getAllStudents();
+
+    // 2. Sort the vector by cGPA in Descending order (Highest first)
+    std::sort(students.begin(), students.end(), [](Student* a, Student* b) {
+        return a->calculateCumulativeGPA() > b->calculateCumulativeGPA();
+    });
+
+    // 3. Determine how many to show (e.g., Top 10)
+    int displayCount = std::min((int)students.size(), 10);
+
+    // 4. Set up the UI Table 
+    // IMPORTANT: Make sure your QTableWidget in the .ui file for this page is named 'tableWidget'
+    ui->tableWidget->setRowCount(displayCount);
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+    // 5. Populate the rows
+    for (int i = 0; i < displayCount; ++i) {
+        Student* s = students[i];
+        QString gpaString = QString::number(s->calculateCumulativeGPA(), 'f', 2);
+
+        ui->tableWidget->setItem(i, 0, new QTableWidgetItem(QString::number(i + 1))); // Rank
+        ui->tableWidget->setItem(i, 1, new QTableWidgetItem(QString::number(s->getID())));
+        ui->tableWidget->setItem(i, 2, new QTableWidgetItem(QString::fromStdString(s->getName())));
+        ui->tableWidget->setItem(i, 3, new QTableWidgetItem("General"));
+        ui->tableWidget->setItem(i, 4, new QTableWidgetItem(gpaString));
+    }
+}
+
+// ==========================================
+// 5. Button Click Events
 // ==========================================
 
 void Instructor::on_btn_addCourse_clicked()
@@ -132,6 +208,10 @@ void Instructor::on_btn_addCourse_clicked()
 
 void Instructor::on_btn_addLecturer_clicked()
 {
-    // Placeholder pop-up until you build AddLecturerDialog
     QMessageBox::information(this, "Coming Soon", "The Add Lecturer dialog will open here!");
+}
+
+void Instructor::on_btn_addStudent_clicked()
+{
+    QMessageBox::information(this, "Coming Soon", "The Add Student dialog will open here!");
 }

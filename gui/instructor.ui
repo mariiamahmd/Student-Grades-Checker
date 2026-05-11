@@ -37,8 +37,303 @@
    <property name="currentIndex">
     <number>0</number>
    </property>
-   <widget class="QWidget" name="Studentpage"/>
-   <widget class="QWidget" name="CoursesPage">
+<widget class="QWidget" name="Studentpage">
+    <property name="styleSheet">
+     <string>QWidget#Studentpage { background-color: #f5f7fb; }</string>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_Main_Students">
+     <property name="spacing">
+      <number>20</number>
+     </property>
+     <property name="leftMargin">
+      <number>20</number>
+     </property>
+     <property name="topMargin">
+      <number>20</number>
+     </property>
+     <property name="rightMargin">
+      <number>20</number>
+     </property>
+     <property name="bottomMargin">
+      <number>20</number>
+     </property>
+     
+     <item>
+      <widget class="QFrame" name="frame_Operations_Student">
+       <property name="minimumSize">
+        <size>
+         <width>250</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>250</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string>
+         QFrame#frame_Operations_Student {
+             background-color: white;
+             border-radius: 10px;
+         }
+         QPushButton {
+             color: white;
+             font-weight: bold;
+             font-size: 14px;
+             border-radius: 6px;
+             padding: 12px;
+             text-align: left;
+             padding-left: 20px;
+         }
+         QPushButton#btn_addStudent { background-color: #1d4ed8; }
+         QPushButton#btn_addStudent:hover { background-color: #1e40af; }
+         
+         QPushButton#btn_searchStudent { background-color: #16a34a; }
+         QPushButton#btn_searchStudent:hover { background-color: #15803d; }
+         
+         QPushButton#btn_updateStudent { background-color: #f59e0b; }
+         QPushButton#btn_updateStudent:hover { background-color: #d97706; }
+         
+         QPushButton#btn_deleteStudent { background-color: #ef4444; }
+         QPushButton#btn_deleteStudent:hover { background-color: #dc2626; }
+        </string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_Ops_Stu">
+        <property name="spacing">
+         <number>15</number>
+        </property>
+        <property name="leftMargin">
+         <number>20</number>
+        </property>
+        <property name="topMargin">
+         <number>30</number>
+        </property>
+        <property name="rightMargin">
+         <number>20</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="label_OpsTitle_Stu">
+          <property name="styleSheet">
+           <string>font-weight: bold; font-size: 14px; color: #111827;</string>
+          </property>
+          <property name="text">
+           <string>Student Operations</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_small_stu">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>10</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btn_addStudent">
+          <property name="text">
+           <string>+ Add New Student</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btn_searchStudent">
+          <property name="text">
+           <string>🔍 Search Student</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btn_updateStudent">
+          <property name="text">
+           <string>✏️ Update Student</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btn_deleteStudent">
+          <property name="text">
+           <string>🗑️ Delete Student</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_large_stu">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>200</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+     </item>
+
+     <item>
+      <widget class="QFrame" name="frame_Data_Student">
+       <property name="styleSheet">
+        <string>
+         QFrame#frame_Data_Student {
+             background-color: white;
+             border-radius: 10px;
+         }
+         QLineEdit {
+             padding: 8px;
+             border: 1px solid #e5e7eb;
+             border-radius: 5px;
+             background-color: #f9fafb;
+             color: #111827;
+         }
+        </string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_Data_Stu">
+        <property name="leftMargin">
+         <number>20</number>
+        </property>
+        <property name="topMargin">
+         <number>20</number>
+        </property>
+        <property name="rightMargin">
+         <number>20</number>
+        </property>
+        <property name="bottomMargin">
+         <number>20</number>
+        </property>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_TopBar_Stu">
+          <item>
+           <widget class="QLabel" name="label_StuTableTitle">
+            <property name="styleSheet">
+             <string>font-weight: bold; font-size: 16px; color: #111827;</string>
+            </property>
+            <property name="text">
+             <string>All Students (Total: 256)</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_TitleSearch_Stu">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineEdit_SearchStu">
+            <property name="minimumSize">
+             <size>
+              <width>250</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="placeholderText">
+             <string>Search by ID or Name...</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="studentsTable">
+          <property name="styleSheet">
+           <string>
+            QTableWidget { background-color: white; color: #374151; border: none; gridline-color: #f3f4f6; font-size: 13px; }
+            QTableWidget::viewport { background-color: white; }
+            QHeaderView::section { background-color: white; color: #111827; font-weight: bold; padding: 10px; border: none; border-bottom: 2px solid #e5e7eb; }
+            QTableWidget::item { padding: 5px; border-bottom: 1px solid #f3f4f6; background-color: white; color: #111827; }
+            QTableWidget::item:selected { background-color: #eff6ff; color: #1d4ed8; }
+           </string>
+          </property>
+          <property name="showGrid">
+           <bool>false</bool>
+          </property>
+          <property name="selectionBehavior">
+           <enum>QAbstractItemView::SelectRows</enum>
+          </property>
+          <attribute name="horizontalHeaderStretchLastSection">
+           <bool>true</bool>
+          </attribute>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+          <column>
+           <property name="text">
+            <string>Student ID</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Name</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Department</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>CGPA</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Status</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_BottomBar_Stu">
+          <item>
+           <widget class="QLabel" name="label_ShowingStu">
+            <property name="styleSheet">
+             <string>color: #6b7280; font-size: 12px;</string>
+            </property>
+            <property name="text">
+             <string>Showing 1 to 5 of 256 students</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_Pagination_Stu">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_PaginationDummy">
+            <property name="styleSheet">
+             <string>color: #1d4ed8; font-weight: bold; font-size: 13px;</string>
+            </property>
+            <property name="text">
+             <string>[ 1 ]  2   3   4   5  ...  52</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </widget>   <widget class="QWidget" name="CoursesPage">
     <property name="styleSheet">
      <string>QWidget#CoursesPage { background-color: #f5f7fb; }</string>
     </property>

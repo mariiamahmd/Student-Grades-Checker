@@ -6,7 +6,3 @@ CMakeLists.txt.user
 # Build directories
 build/
 build-*/
-
-# Some files
-src/GradeManager.cpp
-src/GradeManager.hpp
