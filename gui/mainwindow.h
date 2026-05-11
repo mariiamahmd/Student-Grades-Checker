@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QMainWindow>
-
+#include "../src/GradeManager.hpp"
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -13,7 +13,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-
+void setGradeManager(GradeManager* manager);
 private slots:
 
     void onLecturerTabChanged(int index);
@@ -24,4 +24,5 @@ private slots:
 
 private:
     Ui::MainWindow *ui; // This connects to your .ui file!
+GradeManager* gradeManager;
 };

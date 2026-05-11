@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->btn_instructor, &QPushButton::clicked, this, [=](){
 
         Instructor *ins = new Instructor();
+         ins->setGradeManager(gradeManager);
         ins->show();
 
     });
@@ -82,7 +83,10 @@ MainWindow::~MainWindow()
 void MainWindow::onLecturerTabChanged(int index) {
     // Kept empty to satisfy compiler if it's still in your header
 }
-
+void MainWindow::setGradeManager(GradeManager* manager)
+{
+    gradeManager = manager;
+}
 void MainWindow::handleAddCourse() {
     AddCourseDialog dialog(this);
     if (dialog.exec() == QDialog::Accepted) {
