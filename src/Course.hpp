@@ -14,7 +14,7 @@ private:
     std::string courseCode;
     std::string courseName;
     Lecturer *assignedLecturer;
-    std::unordered_map<int, double> enrolledStudents;   // Hash map for O(1) lookups and updates: Key = StudentID, Value = Grade
+    std::unordered_map<int, double> enrolledStudents; // Hash map for O(1) lookups and updates: Key = StudentID, Value = Grade
     // std::priority_queue<StudentScore> gradeHeap; // can be a vector instead of popping a queue
 
 public:

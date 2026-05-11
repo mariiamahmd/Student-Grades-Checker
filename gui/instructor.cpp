@@ -1,13 +1,19 @@
 #include "instructor.h"
 #include "ui_instructor.h"
-#include "addcoursedialog.h" 
+#include "addcoursedialog.h"
+#include "../src/GradeManager.hpp"
+
 #include <QTableWidgetItem>
 #include <QHeaderView>
 #include <QMessageBox>
+#include <algorithm> // Needed for std::sort
 
-Instructor::Instructor(QWidget *parent)
+// Update constructor to accept the backend pointer
+Instructor::Instructor(GradeManager* backendPtr, QWidget *parent)
     : QWidget(parent)
-    , ui(new Ui::Instructor) ,gradeManager(nullptr)
+
+    , ui(new Ui::Instructor) ,backend(backendPtr)// <-- Save the database reference
+
 {
     ui->setupUi(this);
 
@@ -31,12 +37,14 @@ Instructor::Instructor(QWidget *parent)
     connect(ui->btn_reportsP, &QPushButton::clicked, this, [this]() {
         ui->stackedWidget->setCurrentWidget(ui->ReportsPage);
         setWindowTitle("Reports Dashboard");
+           loadTopStudentsReport();
     });
 
     // Report side bars
     connect(ui->btn_top, &QPushButton::clicked, this, [this]() {
         ui->reportstack->setCurrentWidget(ui->topstudentP);
-        loadTopStudentsReport(); //automatically loads
+        loadTopStudentsReport();
+
     });
     connect(ui->btn_pass, &QPushButton::clicked, this, [this]() {
         ui->reportstack->setCurrentWidget(ui->passfaillp);
@@ -50,6 +58,7 @@ Instructor::Instructor(QWidget *parent)
     // Connect Buttons
     connect(ui->btn_addCourse, &QPushButton::clicked, this, &Instructor::on_btn_addCourse_clicked);
     connect(ui->btn_addLecturer, &QPushButton::clicked, this, &Instructor::on_btn_addLecturer_clicked);
+    connect(ui->btn_addStudent, &QPushButton::clicked, this, &Instructor::on_btn_addStudent_clicked);
 
     // Run Visual Setups
     setupCoursesTable();
@@ -73,6 +82,9 @@ Instructor::Instructor(QWidget *parent)
     ui->barC->setStyleSheet(barStyle);
     ui->barD->setStyleSheet(barStyle);
     ui->barF->setStyleSheet(barStyle);
+
+    setupStudentsTable();
+
 }
 
 Instructor::~Instructor()
@@ -85,9 +97,7 @@ Instructor::~Instructor()
 /////////Ui functions
 void Instructor::setupCoursesTable()
 {
-    // ==========================================
     // FORCE LIGHT MODE COLORS FOR COURSES TAB
-    // ==========================================
     ui->lineEdit_Search->setStyleSheet(
         "QLineEdit {"
         "  color: #111827;" 
@@ -106,8 +116,9 @@ void Instructor::setupCoursesTable()
         "QTableWidget::item { background-color: white; color: #111827; }"
         "QTableWidget::item:selected { background-color: #eff6ff; color: #1d4ed8; }"
     );
-    // ==========================================
 
+
+    // Table settings
 
     ui->coursesTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->coursesTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -142,6 +153,43 @@ void Instructor::setupLecturersTable()
 }
 
 
+void Instructor::setupStudentsTable()
+{
+    // 1. Force Light Mode Colors
+    ui->lineEdit_SearchStu->setStyleSheet(
+        "QLineEdit { color: #111827; background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 5px; padding: 8px; }"
+    );
+    ui->studentsTable->setStyleSheet(
+        "QTableWidget { background-color: white; color: #374151; gridline-color: #f3f4f6; border: none; }"
+        "QTableWidget::viewport { background-color: white; }"
+        "QHeaderView::section { background-color: white; color: #111827; font-weight: bold; border: none; border-bottom: 2px solid #e5e7eb; }"
+        "QTableWidget::item { background-color: white; color: #111827; }"
+        "QTableWidget::item:selected { background-color: #eff6ff; color: #1d4ed8; }"
+    );
+
+    // 2. Format columns
+    ui->studentsTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->studentsTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+    // 3. DYNAMIC DATA INTEGRATION
+    std::vector<Student*> allStudents = backend->getAllStudents();
+    ui->studentsTable->setRowCount(allStudents.size());
+    
+    for (size_t i = 0; i < allStudents.size(); ++i) {
+        Student* s = allStudents[i];
+        QString gpaStr = QString::number(s->calculateCumulativeGPA(), 'f', 2);
+        
+        ui->studentsTable->setItem(i, 0, new QTableWidgetItem(QString::number(s->getID())));
+        ui->studentsTable->setItem(i, 1, new QTableWidgetItem(QString::fromStdString(s->getName())));
+        ui->studentsTable->setItem(i, 2, new QTableWidgetItem("General")); // Placeholder for Dept
+        ui->studentsTable->setItem(i, 3, new QTableWidgetItem(gpaStr));
+        ui->studentsTable->setItem(i, 4, new QTableWidgetItem("Active"));
+    }
+}
+
+
+
+
 /////////button_clicked event
 void Instructor::on_btn_addCourse_clicked()
 {
@@ -151,19 +199,21 @@ void Instructor::on_btn_addCourse_clicked()
 
 void Instructor::on_btn_addLecturer_clicked()
 {
-    // Placeholder pop-up until you build AddLecturerDialog
     QMessageBox::information(this, "Coming Soon", "The Add Lecturer dialog will open here!");
 }
 
+void Instructor::on_btn_addStudent_clicked()
+{
+    QMessageBox::information(this, "Coming Soon", "The Add Student dialog will open here!");
 
-void Instructor::setGradeManager(GradeManager* manager) {
-    gradeManager = manager;
 }
+
+
 
 
 void Instructor::loadTopStudentsReport() {
     // prevent crash if it is not set
-    if (!gradeManager) {
+    if (!backend) {
         qWarning("GradeManager not set!");
         return;
     }
@@ -172,10 +222,10 @@ void Instructor::loadTopStudentsReport() {
     ui->topStudentsTable->setRowCount(0);
 
     // Get top 10 students by CGPA
-    std::vector<Student*> topStudents = gradeManager->getTopStudentsByCGPA(10);
+    std::vector<Student*> topStudents = backend->getTopStudentsByCGPA(10);
 
     // Set up table
-    ui->topStudentsTable->setColumnCount(5);
+    ui->topStudentsTable->setColumnCount(4);
     ui->topStudentsTable->setHorizontalHeaderLabels(
         {"Rank", "Student ID", "Name", "CGPA"}
         );
@@ -205,14 +255,14 @@ void Instructor::loadTopStudentsReport() {
 
 
 }void Instructor::loadPassFailReport() {
-    if (!gradeManager) {
+    if (!backend) {
         qWarning("GradeManager not set!");
         return;
     }
 
     int passCount = 0, failCount = 0;
 
-    gradeManager->getPassFailReport(passCount, failCount, 2.0); ////minimun gpa to pass is 2.0
+    backend->getPassFailReport(passCount, failCount, 2.0); ////minimun gpa to pass is 2.0
 
     int total = passCount + failCount;
 
@@ -227,7 +277,7 @@ void Instructor::loadTopStudentsReport() {
     ui->passFailTable->setRowCount(0);
 
     std::vector<Student*> students =
-        gradeManager->getAllStudentsAsList();
+        backend->getAllStudentsAsList();
 
     ////loop for each student see if its gpa indicates he fail or pass
     for(int i = 0; i < students.size(); i++) {
@@ -259,13 +309,13 @@ void Instructor::loadTopStudentsReport() {
 
 void Instructor::loadGradeDistribution() {
 
-    if (!gradeManager) {
+    if (!backend) {
         qWarning("GradeManager not set!");
         return;
     }
 
     std::map<std::string, int> distribution =
-        gradeManager->getGradeDistribution();
+        backend->getGradeDistribution();
 
     int a = distribution["A"];
     int b = distribution["B"];

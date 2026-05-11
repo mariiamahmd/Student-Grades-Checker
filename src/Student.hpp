@@ -2,11 +2,12 @@
 
 #include "Types.hpp"
 #include <string>
-#include <utility> // Required for pair
+#include <utility> // Required for std::pair
 #include <vector>
 using namespace std;
 
-class Student {
+class Student
+{
 private:
     int studentID;
     int totalCreditHours;
@@ -24,7 +25,7 @@ public:
     int getID() const;
     const string &getName() const;
     int getTotalCreditHours() const;
-    const vector<pair<Term, float>>& getTermGPAs() const; // Read-only access for UI
+    const vector<pair<Term, float>> &getTermGPAs() const; // Read-only access for UI
 
     // Setters / Modifiers
     // The Curriculum Manager will call this to append a new semester's GPA
@@ -35,6 +36,6 @@ public:
     float calculateCumulativeGPA() const;
 
     // Display / Debugging Methods
-    void displayStudentInfo() const;
-    void displayAcademicHistory() const;
+    // void displayStudentInfo() const;
+    // void displayAcademicHistory() const;
 };

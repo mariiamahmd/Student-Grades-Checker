@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
 
 
     MainWindow w;
-    w.setGradeManager(&manager);
+
     w.show();
 
 
