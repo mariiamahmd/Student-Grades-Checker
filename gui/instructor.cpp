@@ -176,7 +176,7 @@ void Instructor::on_btn_deleteCourse_clicked()
 {
     // 1. Figure out which row the user clicked on
     int currentRow = ui->coursesTable->currentRow();
-    
+
     if (currentRow < 0) {
         QMessageBox::warning(this, "Error", "Please click on a course in the table first to select it.");
         return;
@@ -186,15 +186,23 @@ void Instructor::on_btn_deleteCourse_clicked()
     QString courseCode = ui->coursesTable->item(currentRow, 0)->text();
 
     // 3. Ask for confirmation
-    QMessageBox::StandardButton reply = QMessageBox::question(this, "Confirm Delete", 
-                                        "Are you sure you want to completely delete " + courseCode + "?", 
-                                        QMessageBox::Yes | QMessageBox::No);
-                                        
+    QMessageBox::StandardButton reply = QMessageBox::question(this, "Confirm Delete",
+                                                              "Are you sure you want to completely delete " + courseCode + "?",
+                                                              QMessageBox::Yes | QMessageBox::No);
+
     if (reply == QMessageBox::Yes) {
-        // 4. Delete it from the backend and refresh the table!
+        // 4. Delete it from the backend and refresh everything!
         if (backend->deleteCourse(courseCode.toStdString())) {
+
+            setupCoursesTable(); // Redraw the courses table
+
+            // Deleting a course affects student GPAs! Refresh the rest of the UI:
+            setupStudentsTable();
+            loadTopStudentsReport();
+            loadPassFailReport();
+            loadGradeDistribution();
+
             QMessageBox::information(this, "Success", "Course " + courseCode + " deleted.");
-            setupCoursesTable(); // Redraw the table with the updated data
         }
     }
 }
@@ -202,7 +210,7 @@ void Instructor::on_btn_deleteCourse_clicked()
 void Instructor::on_btn_updateCourse_clicked()
 {
     int currentRow = ui->coursesTable->currentRow();
-    
+
     if (currentRow < 0) {
         QMessageBox::warning(this, "Error", "Please click on a course in the table first to update it.");
         return;
@@ -210,25 +218,32 @@ void Instructor::on_btn_updateCourse_clicked()
 
     QString courseCode = ui->coursesTable->item(currentRow, 0)->text();
     Course* course = backend->searchCourse(courseCode.toStdString());
-    
+
     if (course != nullptr) {
         bool ok;
-        
+
         // Ask for the new Course Name
-        QString newName = QInputDialog::getText(this, "Update Course", "New Course Name:", 
+        QString newName = QInputDialog::getText(this, "Update Course", "New Course Name:",
                                                 QLineEdit::Normal, QString::fromStdString(course->getCourseName()), &ok);
-                                                
+
         if (ok && !newName.isEmpty()) {
             course->setCourseName(newName.toStdString());
-            
+
             // Ask for the new Credit Hours
-            int newHours = QInputDialog::getInt(this, "Update Course", "New Credit Hours:", 
+            int newHours = QInputDialog::getInt(this, "Update Course", "New Credit Hours:",
                                                 course->getCreditHours(), 1, 10, 1, &ok);
             if (ok) {
                 course->setCreditHours(newHours);
-                
-                QMessageBox::information(this, "Success", "Course updated successfully!");
+
                 setupCoursesTable(); // Redraw the table to show the new values!
+
+                // CRITICAL: Changing credit hours changes CGPA calculations! Refresh UI:
+                setupStudentsTable();
+                loadTopStudentsReport();
+                loadPassFailReport();
+                loadGradeDistribution();
+
+                QMessageBox::information(this, "Success", "Course updated successfully!");
             }
         }
     }
@@ -298,7 +313,13 @@ void Instructor::on_btn_addCourse_clicked()
 
     // If the user clicks Save and it succeeds, redraw the table
     if (dialog.exec() == QDialog::Accepted) {
-        setupCoursesTable(); // This refreshes your table to show the new course!
+        setupCoursesTable();
+
+        // Refresh reports just to be safe
+        setupStudentsTable();
+        loadTopStudentsReport();
+        loadPassFailReport();
+        loadGradeDistribution();
     }
 }
 
@@ -429,8 +450,21 @@ void Instructor::on_btn_updateLecturer_clicked()
 void Instructor::on_btn_addStudent_clicked()
 {
     AddStudentDialog dialog(backend, this);
-    dialog.exec();
-    setupStudentsTable(); // Refreshes the UI table automatically
+
+    // ONLY refresh if the user actually saved the new student
+    if (dialog.exec() == QDialog::Accepted) {
+
+        // 1. Refresh the main Students tab
+        setupStudentsTable();
+
+        // 2. Refresh ALL the Report charts so the math stays accurate
+        loadTopStudentsReport();
+        loadPassFailReport();
+        loadGradeDistribution();
+
+        // Optional: Let the user know it worked
+        QMessageBox::information(this, "Success", "Student added and dashboards updated!");
+    }
 }
 
 // --- ADDED: The handlers for the new dialogs ---
@@ -443,15 +477,41 @@ void Instructor::on_btn_searchStudent_clicked()
 void Instructor::on_btn_updateStudent_clicked()
 {
     UpdateStudentDialog dialog(backend, this);
-    dialog.exec();
-    setupStudentsTable(); // Refreshes the UI table automatically
+
+    // ONLY refresh if the user actually saved the changes
+    if (dialog.exec() == QDialog::Accepted) {
+
+        // 1. Refresh the main Students tab
+        setupStudentsTable();
+
+        // 2. Refresh ALL the Report charts to keep the dashboard accurate
+        loadTopStudentsReport();
+        loadPassFailReport();
+        loadGradeDistribution();
+
+        // Optional: Let the user know it worked
+        QMessageBox::information(this, "Success", "Student updated and dashboards refreshed!");
+    }
 }
 
 void Instructor::on_btn_deleteStudent_clicked()
 {
     DeleteStudentDialog dialog(backend, this);
-    dialog.exec();
-    setupStudentsTable(); // Refreshes the UI table automatically
+
+    // ONLY refresh if the user actually confirmed the deletion
+    if (dialog.exec() == QDialog::Accepted) {
+
+        // 1. Refresh the main Students tab
+        setupStudentsTable();
+
+        // 2. Refresh ALL the Report charts so the math stays accurate
+        loadTopStudentsReport();
+        loadPassFailReport();
+        loadGradeDistribution();
+
+        // Optional: Let the user know it worked
+        QMessageBox::information(this, "Success", "Student deleted and dashboards updated!");
+    }
 }
 
 
