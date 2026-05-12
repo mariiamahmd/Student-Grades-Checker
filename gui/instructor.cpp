@@ -580,7 +580,7 @@ void Instructor::loadPassFailReport() {
     for(size_t i = 0; i < students.size(); i++) {
         Student* s = students[i];
         double gpa = s->calculateCumulativeGPA();
-        QString status = (gpa >= 2.0) ? "PASS" : "FAIL";
+        QString status = (gpa >= 1.0) ? "PASS" : "FAIL";
 
         int row = ui->passFailTable->rowCount();
         ui->passFailTable->insertRow(row);
