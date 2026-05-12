@@ -1883,7 +1883,7 @@ border-radius: 10px;</string>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>10</x>
       <y>0</y>
       <width>931</width>
       <height>61</height>

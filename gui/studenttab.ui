@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>StudentTab</class>
+ <widget class="QWidget" name="StudentTab">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>500</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Student Management</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_1">
+     <item>
+      <widget class="QLabel" name="label_id">
+       <property name="text">
+        <string>Student ID:</string>
+       </property>
+       <property name="font">
+        <font><bold>true</bold></font>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="idInput">
+       <property name="placeholderText">
+        <string>Enter Numeric ID...</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="label_name">
+       <property name="text">
+        <string>Student Name:</string>
+       </property>
+       <property name="font">
+        <font><bold>true</bold></font>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="nameInput">
+       <property name="placeholderText">
+        <string>Enter Full Name...</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QPushButton" name="addButton">
+       <property name="text">
+        <string>+ Add Student</string>
+       </property>
+       <property name="styleSheet">
+        <string>background-color: #2563eb; color: white; padding: 8px; border-radius: 4px; font-weight: bold;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="searchButton">
+       <property name="text">
+        <string>🔍 Search Student</string>
+       </property>
+       <property name="styleSheet">
+        <string>background-color: #16a34a; color: white; padding: 8px; border-radius: 4px; font-weight: bold;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="deleteButton">
+       <property name="text">
+        <string>🗑️ Delete Student</string>
+       </property>
+       <property name="styleSheet">
+        <string>background-color: #dc2626; color: white; padding: 8px; border-radius: 4px; font-weight: bold;</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QTextEdit" name="displayArea">
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+     <property name="styleSheet">
+      <string>background-color: #f8fafc; border: 1px solid #cbd5e1; font-size: 14px;</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -31,6 +31,13 @@ private slots:
     void on_btn_addLecturer_clicked();
     void on_btn_addStudent_clicked();
 
+    // --- ADDED: Handlers for the new Student operations ---
+    void on_btn_searchStudent_clicked();
+    void on_btn_updateStudent_clicked();
+    void on_btn_deleteStudent_clicked();
+
+    void filterStudentsTable(const QString &searchText);
+
 private:
     Ui::Instructor *ui;
 

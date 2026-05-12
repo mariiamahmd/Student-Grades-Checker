@@ -2,40 +2,48 @@
 
 #include "Types.hpp"
 #include <string>
-#include <utility> // Required for std::pair
 #include <vector>
+
 using namespace std;
+
+// --- NEW: A struct to hold the data for an individual course ---
+struct CourseRecord {
+    string courseCode;
+    Term semester;
+    int credits;
+    float grade; // We will use -1.0 to indicate a course is "In Progress" (no grade yet)
+};
 
 class Student
 {
 private:
     int studentID;
-    int totalCreditHours;
+    int baseCreditHours; // Credits transferred from outside, if any
     string studentName;
 
-    // Vector of pairs storing the Term enum and the corresponding float GPA
-    vector<pair<Term, float>> termGPAs;
+    // --- NEW: Vector storing the student's actual course history ---
+    vector<CourseRecord> registeredCourses;
 
 public:
     // Constructors
     Student(int id, const string &name);
     Student(int id, const string &name, int cHours);
 
-    // Getters (Essential for your BST navigation and Qt GUI display)
+    // Getters
     int getID() const;
     const string &getName() const;
-    int getTotalCreditHours() const;
-    const vector<pair<Term, float>> &getTermGPAs() const; // Read-only access for UI
+    int getTotalCreditHours() const; // Now calculates dynamically!
 
-    // Setters / Modifiers
-    // The Curriculum Manager will call this to append a new semester's GPA
-    void addTermGPA(Term term, float gpa);
-    void updateTotalCreditHours(int hours);
+    // Read-only access to course history for the UI
+    const vector<CourseRecord>& getRegisteredCourses() const;
+
+    // --- NEW: Setters / Modifiers ---
+    // 1. Registers a student for a course with no grade (-1.0)
+    void registerCourse(const string& courseCode, Term term, int credits);
+
+    // 2. Assigns a final grade to a course the student is taking
+    bool setCourseGrade(const string& courseCode, float grade);
 
     // Core Business Logic
     float calculateCumulativeGPA() const;
-
-    // Display / Debugging Methods
-    // void displayStudentInfo() const;
-    // void displayAcademicHistory() const;
 };

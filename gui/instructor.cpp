@@ -3,6 +3,12 @@
 #include "addcoursedialog.h"
 #include "../src/GradeManager.hpp"
 
+// --- ADDED: Includes for your new student dialogs ---
+#include "addstudentdialog.h"
+#include "searchstudentdialog.h"
+#include "updatestudentdialog.h"
+#include "deletestudentdialog.h"
+
 #include <QTableWidgetItem>
 #include <QHeaderView>
 #include <QMessageBox>
@@ -37,7 +43,7 @@ Instructor::Instructor(GradeManager* backendPtr, QWidget *parent)
     connect(ui->btn_reportsP, &QPushButton::clicked, this, [this]() {
         ui->stackedWidget->setCurrentWidget(ui->ReportsPage);
         setWindowTitle("Reports Dashboard");
-           loadTopStudentsReport();
+        loadTopStudentsReport();
     });
 
     // Report side bars
@@ -58,7 +64,8 @@ Instructor::Instructor(GradeManager* backendPtr, QWidget *parent)
     // Connect Buttons
     connect(ui->btn_addCourse, &QPushButton::clicked, this, &Instructor::on_btn_addCourse_clicked);
     connect(ui->btn_addLecturer, &QPushButton::clicked, this, &Instructor::on_btn_addLecturer_clicked);
-    connect(ui->btn_addStudent, &QPushButton::clicked, this, &Instructor::on_btn_addStudent_clicked);
+
+    connect(ui->lineEdit_SearchStu, &QLineEdit::textChanged, this, &Instructor::filterStudentsTable);
 
     // Run Visual Setups
     setupCoursesTable();
@@ -100,13 +107,13 @@ void Instructor::setupCoursesTable()
     // FORCE LIGHT MODE COLORS FOR COURSES TAB
     ui->lineEdit_Search->setStyleSheet(
         "QLineEdit {"
-        "  color: #111827;" 
+        "  color: #111827;"
         "  background-color: #f9fafb;"
         "  border: 1px solid #e5e7eb;"
         "  border-radius: 5px;"
         "  padding: 8px;"
         "}"
-    );
+        );
 
 
     ui->coursesTable->setStyleSheet(
@@ -115,7 +122,7 @@ void Instructor::setupCoursesTable()
         "QHeaderView::section { background-color: white; color: #111827; font-weight: bold; border: none; border-bottom: 2px solid #e5e7eb; }"
         "QTableWidget::item { background-color: white; color: #111827; }"
         "QTableWidget::item:selected { background-color: #eff6ff; color: #1d4ed8; }"
-    );
+        );
 
 
     // Table settings
@@ -129,7 +136,7 @@ void Instructor::setupCoursesTable()
     ui->coursesTable->setItem(0, 1, new QTableWidgetItem("Data Structures"));
     ui->coursesTable->setItem(0, 2, new QTableWidgetItem("3"));
     ui->coursesTable->setItem(0, 3, new QTableWidgetItem("Unassigned"));
-    
+
     ui->label_TableTitle->setText("All Courses (Total: 1)");
     ui->label_Showing->setText("Showing 1 to 1 of 1 courses");
 }
@@ -146,7 +153,7 @@ void Instructor::setupLecturersTable()
     ui->lecturersTable->setItem(0, 0, new QTableWidgetItem("101"));
     ui->lecturersTable->setItem(0, 1, new QTableWidgetItem("Dr. Ahmed Raza"));
     ui->lecturersTable->setItem(0, 2, new QTableWidgetItem("Computer Science"));
-    
+
     // Update labels
     ui->label_LecTableTitle->setText("All Lecturers (Total: 1)");
     ui->label_ShowingLec->setText("Showing 1 to 1 of 1 lecturers");
@@ -158,14 +165,14 @@ void Instructor::setupStudentsTable()
     // 1. Force Light Mode Colors
     ui->lineEdit_SearchStu->setStyleSheet(
         "QLineEdit { color: #111827; background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 5px; padding: 8px; }"
-    );
+        );
     ui->studentsTable->setStyleSheet(
         "QTableWidget { background-color: white; color: #374151; gridline-color: #f3f4f6; border: none; }"
         "QTableWidget::viewport { background-color: white; }"
         "QHeaderView::section { background-color: white; color: #111827; font-weight: bold; border: none; border-bottom: 2px solid #e5e7eb; }"
         "QTableWidget::item { background-color: white; color: #111827; }"
         "QTableWidget::item:selected { background-color: #eff6ff; color: #1d4ed8; }"
-    );
+        );
 
     // 2. Format columns
     ui->studentsTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -174,11 +181,11 @@ void Instructor::setupStudentsTable()
     // 3. DYNAMIC DATA INTEGRATION
     std::vector<Student*> allStudents = backend->getAllStudents();
     ui->studentsTable->setRowCount(allStudents.size());
-    
+
     for (size_t i = 0; i < allStudents.size(); ++i) {
         Student* s = allStudents[i];
         QString gpaStr = QString::number(s->calculateCumulativeGPA(), 'f', 2);
-        
+
         ui->studentsTable->setItem(i, 0, new QTableWidgetItem(QString::number(s->getID())));
         ui->studentsTable->setItem(i, 1, new QTableWidgetItem(QString::fromStdString(s->getName())));
         ui->studentsTable->setItem(i, 2, new QTableWidgetItem("General")); // Placeholder for Dept
@@ -194,7 +201,7 @@ void Instructor::setupStudentsTable()
 void Instructor::on_btn_addCourse_clicked()
 {
     AddCourseDialog dialog(this);
-    dialog.exec(); 
+    dialog.exec();
 }
 
 void Instructor::on_btn_addLecturer_clicked()
@@ -202,13 +209,34 @@ void Instructor::on_btn_addLecturer_clicked()
     QMessageBox::information(this, "Coming Soon", "The Add Lecturer dialog will open here!");
 }
 
+// --- UPDATED: Replaced the 'Coming Soon' message with the actual logic ---
 void Instructor::on_btn_addStudent_clicked()
 {
-    QMessageBox::information(this, "Coming Soon", "The Add Student dialog will open here!");
-
+    AddStudentDialog dialog(backend, this);
+    dialog.exec();
+    setupStudentsTable(); // Refreshes the UI table automatically
 }
 
+// --- ADDED: The handlers for the new dialogs ---
+void Instructor::on_btn_searchStudent_clicked()
+{
+    SearchStudentDialog dialog(backend, this);
+    dialog.exec();
+}
 
+void Instructor::on_btn_updateStudent_clicked()
+{
+    UpdateStudentDialog dialog(backend, this);
+    dialog.exec();
+    setupStudentsTable(); // Refreshes the UI table automatically
+}
+
+void Instructor::on_btn_deleteStudent_clicked()
+{
+    DeleteStudentDialog dialog(backend, this);
+    dialog.exec();
+    setupStudentsTable(); // Refreshes the UI table automatically
+}
 
 
 void Instructor::loadTopStudentsReport() {
@@ -266,7 +294,7 @@ void Instructor::loadTopStudentsReport() {
 
     int total = passCount + failCount;
 
-  ///// change text into the counts values
+    ///// change text into the counts values
     ui->valueLabel_pass->setText(QString::number(passCount));
     ui->valueLabel_fail->setText(QString::number(failCount));
     ui->valueLabel_->setText(QString::number(total));
@@ -334,4 +362,32 @@ void Instructor::loadGradeDistribution() {
     ui->labelC->setText(QString("C\n%1").arg(c));
     ui->labelD->setText(QString("D\n%1").arg(d));
     ui->labelF->setText(QString("F\n%1").arg(f));
+}
+
+// ====================================================================
+// LIVE SEARCH BAR LOGIC
+// ====================================================================
+void Instructor::filterStudentsTable(const QString &searchText)
+{
+    // Loop through every row currently in the table
+    for (int i = 0; i < ui->studentsTable->rowCount(); ++i) {
+        bool matchFound = false;
+
+        // Grab the ID and Name cells for this specific row
+        QTableWidgetItem *idItem = ui->studentsTable->item(i, 0);
+        QTableWidgetItem *nameItem = ui->studentsTable->item(i, 1);
+
+        // Check if the ID contains the typed text (Case Insensitive)
+        if (idItem && idItem->text().contains(searchText, Qt::CaseInsensitive)) {
+            matchFound = true;
+        }
+
+        // Check if the Name contains the typed text (Case Insensitive)
+        if (nameItem && nameItem->text().contains(searchText, Qt::CaseInsensitive)) {
+            matchFound = true;
+        }
+
+        // If a match was found, show the row (setRowHidden = false). Otherwise, hide it.
+        ui->studentsTable->setRowHidden(i, !matchFound);
+    }
 }

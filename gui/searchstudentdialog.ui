@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SearchStudentDialog</class>
+ <widget class="QDialog" name="SearchStudentDialog">
+  <property name="geometry">
+   <rect><x>0</x><y>0</y><width>420</width><height>320</height></rect>
+  </property>
+  <property name="windowTitle"><string>Search Student</string></property>
+  <property name="styleSheet">
+   <string>
+    QDialog { background-color: #f8fafc; }
+    QLabel { font-size: 13px; font-weight: bold; color: #1e293b; }
+    QLineEdit { border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px; background-color: white; color: #0f172a; font-size: 13px; }
+    QLineEdit:focus { border: 2px solid #2563eb; }
+    QPushButton { background-color: #16a34a; color: white; border-radius: 6px; font-weight: bold; padding: 8px 15px; font-size: 13px; }
+    QPushButton:hover { background-color: #15803d; }
+    QTextEdit { border: 1px solid #cbd5e1; border-radius: 6px; background-color: white; padding: 10px; color: #0f172a; font-size: 14px; }
+   </string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin"><number>20</number></property>
+   <property name="topMargin"><number>20</number></property>
+   <property name="rightMargin"><number>20</number></property>
+   <property name="bottomMargin"><number>20</number></property>
+   <item><widget class="QLabel" name="label"><property name="text"><string>Enter Student ID:</string></property></widget></item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item><widget class="QLineEdit" name="inputId"><property name="placeholderText"><string>e.g., 1045</string></property></widget></item>
+     <item><widget class="QPushButton" name="btnSearch"><property name="text"><string>🔍 Search</string></property></widget></item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="spacer1"><property name="orientation"><enum>Qt::Vertical</enum></property><property name="sizeHint" stdset="0"><size><width>20</width><height>10</height></size></property></spacer>
+   </item>
+   <item><widget class="QTextEdit" name="textResult"><property name="readOnly"><bool>true</bool></property><property name="placeholderText"><string>Search results will appear here...</string></property></widget></item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

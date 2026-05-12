@@ -26,23 +26,38 @@ int main(int argc, char *argv[])
     manager.addStudent(1005, "Youssef");
 
     // ==========================================
-    // Add GPA Records
+    // Register Courses & Assign Grades
     // ==========================================
 
-    manager.addTermGPA(1001, Term::Fall, 3.8);
-    manager.addTermGPA(1001, Term::Spring, 3.9);
+    // Ahmed (Expected CGPA ~ 3.85)
+    manager.registerStudentForCourse(1001, "CSE101", Term::Fall, 3);
+    manager.gradeStudentCourse(1001, "CSE101", 3.8);
+    manager.registerStudentForCourse(1001, "MAT101", Term::Spring, 3);
+    manager.gradeStudentCourse(1001, "MAT101", 3.9);
 
-    manager.addTermGPA(1002, Term::Fall, 3.0);
-    manager.addTermGPA(1002, Term::Spring, 3.2);
+    // Mariam (Expected CGPA ~ 3.1)
+    manager.registerStudentForCourse(1002, "CSE101", Term::Fall, 3);
+    manager.gradeStudentCourse(1002, "CSE101", 3.0);
+    manager.registerStudentForCourse(1002, "MAT101", Term::Spring, 3);
+    manager.gradeStudentCourse(1002, "MAT101", 3.2);
 
-    manager.addTermGPA(1003, Term::Fall, 1.5);
-    manager.addTermGPA(1003, Term::Spring, 1.8);
+    // Omar (Expected CGPA ~ 1.65)
+    manager.registerStudentForCourse(1003, "CSE101", Term::Fall, 3);
+    manager.gradeStudentCourse(1003, "CSE101", 1.5);
+    manager.registerStudentForCourse(1003, "MAT101", Term::Spring, 3);
+    manager.gradeStudentCourse(1003, "MAT101", 1.8);
 
-    manager.addTermGPA(1004, Term::Fall, 2.5);
-    manager.addTermGPA(1004, Term::Spring, 2.7);
+    // Sara (Expected CGPA ~ 2.6)
+    manager.registerStudentForCourse(1004, "CSE101", Term::Fall, 3);
+    manager.gradeStudentCourse(1004, "CSE101", 2.5);
+    manager.registerStudentForCourse(1004, "MAT101", Term::Spring, 3);
+    manager.gradeStudentCourse(1004, "MAT101", 2.7);
 
-    manager.addTermGPA(1005, Term::Fall, 4.0);
-    manager.addTermGPA(1005, Term::Spring, 3.9);
+    // Youssef (Expected CGPA ~ 3.95)
+    manager.registerStudentForCourse(1005, "CSE101", Term::Fall, 3);
+    manager.gradeStudentCourse(1005, "CSE101", 4.0);
+    manager.registerStudentForCourse(1005, "MAT101", Term::Spring, 3);
+    manager.gradeStudentCourse(1005, "MAT101", 3.9);
 
 
     MainWindow w;

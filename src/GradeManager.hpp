@@ -2,9 +2,7 @@
 #include "Student.hpp"
 #include "Types.hpp"
 #include <string>
-
 #include <map>
-
 #include <vector>
 
 // Node structure declaration for the Binary Search Tree
@@ -35,7 +33,6 @@ private:
     void inorderTraversal(TreeNode *node) const;
     void destroyTree(TreeNode *node);
 
-
     // Habiba: Helper to collect students for the UI -->
     void collectStudentsInOrder(TreeNode *node, std::vector<Student*> &studentList) const;
 
@@ -54,9 +51,15 @@ public:
     // Removes a student from the tree
     bool deleteStudent(int id);
 
-    // Grade modifier: Finds the student and appends a GPA
-    void addTermGPA(int studentId, Term term, float gpa);
+    // ==========================================
+    // --- NEW: Course & Grade Modifiers ---
+    // ==========================================
 
+    // Registers a student for a course (default grade is -1.0)
+    bool registerStudentForCourse(int studentId, const string& courseCode, Term term, int credits);
+
+    // Updates the grade for a specific course the student is taking
+    bool gradeStudentCourse(int studentId, const string& courseCode, float grade);
 
     // Display operations (Terminal only)
     void displayAllStudents() const;
@@ -71,7 +74,4 @@ public:
     // Habiba: GUI Fetcher -->
     // Returns a flat list of pointers to all students sorted by ID
     std::vector<Student*> getAllStudents() const;
-    // // Display operations (Terminal only)
-    // void displayAllStudents() const;
-
 };

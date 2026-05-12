@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AddStudentDialog</class>
+ <widget class="QDialog" name="AddStudentDialog">
+  <property name="geometry">
+   <rect><x>0</x><y>0</y><width>380</width><height>240</height></rect>
+  </property>
+  <property name="windowTitle"><string>Add New Student</string></property>
+  <property name="styleSheet">
+   <string>
+    QDialog { background-color: #f8fafc; }
+    QLabel { font-size: 13px; font-weight: bold; color: #1e293b; }
+    QLineEdit { border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px; background-color: white; color: #0f172a; font-size: 13px; }
+    QLineEdit:focus { border: 2px solid #2563eb; }
+    QPushButton { background-color: #1d4ed8; color: white; border-radius: 6px; font-weight: bold; padding: 8px 15px; font-size: 13px; }
+    QPushButton:hover { background-color: #1e40af; }
+    QPushButton:pressed { background-color: #1e3a8a; }
+   </string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin"><number>20</number></property>
+   <property name="topMargin"><number>20</number></property>
+   <property name="rightMargin"><number>20</number></property>
+   <property name="bottomMargin"><number>20</number></property>
+   <item><widget class="QLabel" name="label_1"><property name="text"><string>Student ID (Numeric):</string></property></widget></item>
+   <item><widget class="QLineEdit" name="inputId"><property name="placeholderText"><string>Enter Student ID...</string></property></widget></item>
+   <item>
+    <spacer name="spacer1"><property name="orientation"><enum>Qt::Vertical</enum></property><property name="sizeHint" stdset="0"><size><width>20</width><height>10</height></size></property></spacer>
+   </item>
+   <item><widget class="QLabel" name="label_2"><property name="text"><string>Student Full Name:</string></property></widget></item>
+   <item><widget class="QLineEdit" name="inputName"><property name="placeholderText"><string>Enter Full Name...</string></property></widget></item>
+   <item>
+    <spacer name="spacer2"><property name="orientation"><enum>Qt::Vertical</enum></property><property name="sizeHint" stdset="0"><size><width>20</width><height>15</height></size></property></spacer>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons"><set>QDialogButtonBox::Cancel|QDialogButtonBox::Save</set></property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection><sender>buttonBox</sender><signal>accepted()</signal><receiver>AddStudentDialog</receiver><slot>accept()</slot></connection>
+  <connection><sender>buttonBox</sender><signal>rejected()</signal><receiver>AddStudentDialog</receiver><slot>reject()</slot></connection>
+ </connections>
+</ui>

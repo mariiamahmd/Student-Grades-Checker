@@ -21,26 +21,39 @@ void loadTestData(GradeManager* backend) {
     backend->addStudent(1048, "Ayesha Noor");
     backend->addStudent(1049, "Usman Javed");
 
-    // Inject Grades to create different cGPAs
-    // Ahmed (High GPA)
-    backend->addTermGPA(1045, Term::Fall, 3.8);
-    backend->addTermGPA(1045, Term::Spring, 3.9);
-    
-    // Fatima (Medium GPA)
-    backend->addTermGPA(1046, Term::Fall, 3.2);
-    backend->addTermGPA(1046, Term::Spring, 3.5);
+    // ==========================================
+    // Inject Courses & Grades to create different cGPAs
+    // ==========================================
 
-    // Hassan (Lower GPA)
-    backend->addTermGPA(1047, Term::Fall, 2.5);
-    backend->addTermGPA(1047, Term::Spring, 2.9);
+    // Ahmed (High GPA ~ 3.85)
+    backend->registerStudentForCourse(1045, "CSE101", Term::Fall, 3);
+    backend->gradeStudentCourse(1045, "CSE101", 3.8);
+    backend->registerStudentForCourse(1045, "MAT101", Term::Spring, 3);
+    backend->gradeStudentCourse(1045, "MAT101", 3.9);
 
-    // Ayesha (Top Student!)
-    backend->addTermGPA(1048, Term::Fall, 4.0);
-    backend->addTermGPA(1048, Term::Spring, 3.9);
+    // Fatima (Medium GPA ~ 3.35)
+    backend->registerStudentForCourse(1046, "CSE101", Term::Fall, 3);
+    backend->gradeStudentCourse(1046, "CSE101", 3.2);
+    backend->registerStudentForCourse(1046, "MAT101", Term::Spring, 3);
+    backend->gradeStudentCourse(1046, "MAT101", 3.5);
 
-    // Usman
-    backend->addTermGPA(1049, Term::Fall, 3.1);
-    backend->addTermGPA(1049, Term::Spring, 3.0);
+    // Hassan (Lower GPA ~ 2.7)
+    backend->registerStudentForCourse(1047, "CSE101", Term::Fall, 3);
+    backend->gradeStudentCourse(1047, "CSE101", 2.5);
+    backend->registerStudentForCourse(1047, "MAT101", Term::Spring, 3);
+    backend->gradeStudentCourse(1047, "MAT101", 2.9);
+
+    // Ayesha (Top Student! ~ 3.95)
+    backend->registerStudentForCourse(1048, "CSE101", Term::Fall, 3);
+    backend->gradeStudentCourse(1048, "CSE101", 4.0);
+    backend->registerStudentForCourse(1048, "MAT101", Term::Spring, 3);
+    backend->gradeStudentCourse(1048, "MAT101", 3.9);
+
+    // Usman (Medium GPA ~ 3.05)
+    backend->registerStudentForCourse(1049, "CSE101", Term::Fall, 3);
+    backend->gradeStudentCourse(1049, "CSE101", 3.1);
+    backend->registerStudentForCourse(1049, "MAT101", Term::Spring, 3);
+    backend->gradeStudentCourse(1049, "MAT101", 3.0);
 }
 
 MainWindow::MainWindow(QWidget *parent)
@@ -49,18 +62,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-
-    connect(ui->btn_instructor, &QPushButton::clicked, this, [=](){
-        GradeManager* masterBackend = new GradeManager();
-
-        loadTestData(masterBackend);
-      Instructor *ins = new Instructor(masterBackend);
-        ins->show();
-
-    });
-
     // Light mode override for the main window
-
     this->setStyleSheet(R"(
         QWidget { background-color: white; }
         QFrame { background-color: white; border-radius: 12px; }
@@ -74,35 +76,40 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Initialize the main backend database
     GradeManager* masterBackend = new GradeManager();
-    
+
     // Load the mock data into the tree immediately
     loadTestData(masterBackend);
-
 
     // ==========================================
     // 1. ROLE SELECTION (The Welcome Screen)
     // ==========================================
-    
+
     // INSTRUCTOR LOGIN
     connect(ui->btn_instructor, &QPushButton::clicked, this, [=](){
         // Open the Instructor Dashboard AND pass the backend to it!
         Instructor *ins = new Instructor(masterBackend);
         ins->show();
-        
+
         // Optional: you can hide the main window here if you want using this->hide();
     });
 
     // STUDENT LOGIN
-    connect(ui->btn_student, &QPushButton::clicked, this, [this]() {
+    connect(ui->btn_student, &QPushButton::clicked, this, [this, masterBackend]() {
         StudentLoginDialog loginDialog(this);
-        
+
         if (loginDialog.exec() == QDialog::Accepted) {
-            QString studentId = loginDialog.getEnteredID();
-            QMessageBox::information(this, "Login Successful", "Welcome to your dashboard, Student ID: " + studentId);
-            ui->mainStack->setCurrentIndex(1); 
+            QString studentIdStr = loginDialog.getEnteredID();
+            int id = studentIdStr.toInt();
+
+            // Check if student actually exists in the database before logging in
+            if (masterBackend->searchStudent(id) != nullptr) {
+                QMessageBox::information(this, "Login Successful", "Welcome to your dashboard, Student ID: " + studentIdStr);
+                ui->mainStack->setCurrentIndex(1);
+            } else {
+                QMessageBox::warning(this, "Login Failed", "Student ID not found in the system.");
+            }
         }
     });
-
 
     // ==========================================
     // 2. LECTURER SIDEBAR NAVIGATION (Legacy/Alternative View)
@@ -111,7 +118,6 @@ MainWindow::MainWindow(QWidget *parent)
             ui->lecturerPanes, &QStackedWidget::setCurrentIndex);
 
     ui->sidebarMenu->setCurrentRow(0); // Default to first tab
-
 
     // ==========================================
     // 3. LECTURER DASHBOARD BUTTON CONNECTIONS

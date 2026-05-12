@@ -22,11 +22,7 @@ void GradeManager::destroyTree(TreeNode *node)
     }
 }
 
-
-
-
 ///////////adding student ////////////
-
 
 void GradeManager::addStudent(int id, const string &name)
 {
@@ -41,7 +37,6 @@ Student *GradeManager::searchStudent(int id) const
 {
     TreeNode *result = searchHelper(root, id);
 
-
     if (result != nullptr)
     {
         // cast away const so the teammate's code can modify the student's grades
@@ -54,7 +49,6 @@ Student *GradeManager::searchStudent(int id) const
 
 bool GradeManager::deleteStudent(int id)
 {
-
     // check if student exists first
     if (searchStudent(id) == nullptr)
     {
@@ -65,22 +59,33 @@ bool GradeManager::deleteStudent(int id)
     return true;
 }
 
-////////adding gpa
-void GradeManager::addTermGPA(int studentId, Term term, float gpa)
+// ==========================================
+// --- NEW: Course Registration & Grading ---
+// ==========================================
+
+bool GradeManager::registerStudentForCourse(int studentId, const string& courseCode, Term term, int credits)
 {
     Student *foundStudent = searchStudent(studentId);
 
+    if (foundStudent != nullptr)
+    {
+        foundStudent->registerCourse(courseCode, term, credits);
+        return true;
+    }
+    return false; // Student not found
+}
+
+bool GradeManager::gradeStudentCourse(int studentId, const string& courseCode, float grade)
+{
+    Student *foundStudent = searchStudent(studentId);
 
     if (foundStudent != nullptr)
     {
-        foundStudent->addTermGPA(term, gpa);
-        cout << "GPA recorded for ID: " << studentId << "\n";
+        return foundStudent->setCourseGrade(courseCode, grade);
     }
-    else
-    {
-        cout << "Error: Student ID " << studentId << " not found.\n";
-    }
+    return false; // Student not found
 }
+
 
 // void GradeManager::displayAllStudents() const
 // {
@@ -273,11 +278,11 @@ map<string, int> GradeManager::getGradeDistribution() const {
     }
 
     return distribution;
+}
 
 // ==============================================================
 // NEW UI TRANSLATION METHODS
 // ==============================================================
-}
 
 std::vector<Student *> GradeManager::getAllStudents() const
 {
@@ -297,5 +302,4 @@ void GradeManager::collectStudentsInOrder(TreeNode *node, std::vector<Student *>
 
         collectStudentsInOrder(node->right, studentList);
     }
-
 }
