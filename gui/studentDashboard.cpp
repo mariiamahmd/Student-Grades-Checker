@@ -42,6 +42,16 @@ void StudentDashboard::loadStudentData()
     ui->historyTable->setColumnCount(3); // Code, Semester, Grade
     ui->historyTable->setHorizontalHeaderLabels({"Course", "Semester", "Grade"});
 
+    ui->historyTable->horizontalHeader()->setStretchLastSection(true);
+
+    ui->historyTable->horizontalHeader()
+        ->setSectionResizeMode(QHeaderView::Stretch);
+
+    ui->historyTable->verticalHeader()->setVisible(false);
+
+    ui->historyTable->setShowGrid(false);
+
+    ui->historyTable->setAlternatingRowColors(true);
     for(int i = 0; i < (int)history.size(); i++)
     {
         // 1. Semester Column

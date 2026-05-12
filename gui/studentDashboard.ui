@@ -225,29 +225,54 @@ background: transparent;
   <widget class="QTableWidget" name="historyTable">
    <property name="geometry">
     <rect>
-     <x>350</x>
+     <x>290</x>
      <y>360</y>
-     <width>241</width>
+     <width>481</width>
      <height>180</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">
-QTableWidget{
-background:white;
-border-radius:10px;
-gridline-color:#e5e7eb;
-font-size:16px;
+    <string notr="true">QTableWidget {
+    background-color: white;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    gridline-color: #e5e7eb;
+    color: black;
+    font-size: 14px;
 }
 
-QHeaderView::section{
-background:#2563eb;
-color:white;
-font-weight:bold;
-padding:6px;
-border:none;
+
+
+QTableWidget::item:selected {
+    background-color: #dbeafe;
+    color: black;
 }
-    </string>
+
+QHeaderView::section {
+    background-color: #2563eb;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    border: none;
+}
+
+QTableCornerButton::section {
+    background-color: #2563eb;
+    border: none;
+}
+
+QScrollBar:horizontal,
+QScrollBar:vertical {
+    background: #f3f4f6;
+    border: none;
+    border-radius: 5px;
+}
+
+QScrollBar::handle:horizontal,
+QScrollBar::handle:vertical {
+    background: #9ca3af;
+    border-radius: 5px;
+}</string>
    </property>
    <column>
     <property name="text">
