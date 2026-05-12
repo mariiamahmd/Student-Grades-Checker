@@ -56,7 +56,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         gui/updatestudentdialog.h gui/updatestudentdialog.cpp gui/updatestudentdialog.ui
         gui/deletestudentdialog.h gui/deletestudentdialog.cpp gui/deletestudentdialog.ui
         gui/searchstudentdialog.h gui/searchstudentdialog.cpp gui/searchstudentdialog.ui
-
+        gui/studentdashboard.h gui/studentdashboard.cpp gui/studentdashboard.ui
 
 
 

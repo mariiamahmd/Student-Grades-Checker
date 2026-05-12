@@ -2,8 +2,12 @@
 
 #include <QMainWindow>
 #include "../src/GradeManager.hpp"
+
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
+namespace Ui
+{
+    class MainWindow;
+}
 QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
@@ -11,18 +15,19 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(GradeManager* manager,
+                        QWidget *parent = nullptr);
     ~MainWindow();
-void setGradeManager(GradeManager* manager);
+    
+    void setGradeManager(GradeManager *manager);
+
 private slots:
-
     void onLecturerTabChanged(int index);
-    void handleAddCourse();
-    void handleRecordGrade();
-
-
+    
+    void handleAddCourse(GradeManager *backend);
+    void handleRecordGrade(GradeManager *backend);
 
 private:
     Ui::MainWindow *ui; // This connects to your .ui file!
-GradeManager* gradeManager;
+GradeManager* backend;
 };

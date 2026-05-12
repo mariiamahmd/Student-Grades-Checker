@@ -26,9 +26,9 @@ public:
 
 
 private slots:
-    // Button click handlers
+    // Button click handlers    
     void on_btn_addCourse_clicked();
-    void on_btn_addLecturer_clicked();
+    void on_btn_assignLecturer_clicked();
     void on_btn_addStudent_clicked();
 
     // --- ADDED: Handlers for the new Student operations ---
@@ -38,6 +38,16 @@ private slots:
 
     void filterStudentsTable(const QString &searchText);
 
+    void on_btn_addLecturer_clicked();
+    void on_btn_deleteLecturer_clicked();
+    void on_btn_updateLecturer_clicked();
+
+    void on_lineEdit_SearchLec_textChanged(const QString &text);
+
+    // NEW SLOTS FOR THE COURSES TAB
+    void on_lineEdit_Search_textChanged(const QString &arg1); // Live Search
+    void on_btn_deleteCourse_clicked(); // Make sure this matches your UI button name!
+    void on_btn_updateCourse_clicked(); // Make sure this matches your UI button name!
 private:
     Ui::Instructor *ui;
 

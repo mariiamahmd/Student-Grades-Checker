@@ -8,8 +8,16 @@ GradeManager::GradeManager() : root(nullptr) {}
 
 GradeManager::~GradeManager()
 {
-    // clean up memory when the program closes
+    // clean up BST memory when the program closes
     destroyTree(root);
+
+    for (auto& pair : coursesDatabase) {
+        delete pair.second;
+    }
+    
+    for (auto& pair : lecturersDatabase) {
+        delete pair.second;
+    }
 }
 
 void GradeManager::destroyTree(TreeNode *node)
@@ -197,21 +205,6 @@ void GradeManager::inorderTraversal(TreeNode *node) const
     }
 }
 
-////convert bst to list/////
-// Get all students as a list (for sorting/filtering)
-vector<Student*> GradeManager::getAllStudentsAsList() const {
-    vector<Student*> students;
-    collectStudents(root, students);
-    return students;
-}
-
-void GradeManager::collectStudents(TreeNode* node, vector<Student*>& students) const {
-    if (node != nullptr) {
-        collectStudents(node->left, students);
-        students.push_back(const_cast<Student*>(&(node->student)));
-        collectStudents(node->right, students);
-    }
-}
 
 // Get top N students by CGPA
 vector<Student*> GradeManager::getTopStudentsByCGPA(int topN) const {
@@ -280,11 +273,95 @@ map<string, int> GradeManager::getGradeDistribution() const {
     return distribution;
 }
 
+// COURSE OPERATIONS (O(1) Hash Map)
+void GradeManager::addCourse(Course* newCourse) 
+{
+    if (newCourse != nullptr) {
+        coursesDatabase[newCourse->getCourseCode()] = newCourse;
+    }
+}
+
+Course* GradeManager::searchCourse(const std::string& courseCode) const 
+{
+    auto it = coursesDatabase.find(courseCode);
+    if (it != coursesDatabase.end()) {
+        return it->second; // Found it!
+    }
+    return nullptr; // Not found
+}
+
+std::vector<Course*> GradeManager::getAllCourses() const 
+{
+    std::vector<Course*> courseList;
+    for (const auto& pair : coursesDatabase) {
+        courseList.push_back(pair.second);
+    }
+    return courseList;
+}
+
+bool GradeManager::deleteCourse(const std::string& courseCode) 
+{
+    // Look for the course in the hash map
+    auto it = coursesDatabase.find(courseCode);
+    
+    if (it != coursesDatabase.end()) {
+        delete it->second;         // 1. Free the memory (avoid memory leaks!)
+        coursesDatabase.erase(it); // 2. Remove it from the Hash Map
+        return true;
+    }
+    return false; // Course not found
+}
+
+// LECTURER OPERATIONS (O(1) Hash Map)
+void GradeManager::addLecturer(Lecturer* newLecturer) 
+{
+    if (newLecturer != nullptr) {
+        lecturersDatabase[newLecturer->getID()] = newLecturer;
+    }
+}
+
+bool GradeManager::deleteLecturer(int id) 
+{
+    auto it = lecturersDatabase.find(id);
+    if (it != lecturersDatabase.end()) {
+        
+        // 1. Safety Check: If this lecturer is teaching a course, unassign them first!
+        for (auto& pair : coursesDatabase) {
+            if (pair.second->getAssignedLecturer() == it->second) {
+                pair.second->setAssignedLecturer(nullptr);
+            }
+        }
+
+        // 2. Free the memory and remove them from the system
+        delete it->second;         
+        lecturersDatabase.erase(it); 
+        return true;
+    }
+    return false; // Not found
+}
+
+Lecturer* GradeManager::searchLecturer(int id) const 
+{
+    auto it = lecturersDatabase.find(id);
+    if (it != lecturersDatabase.end()) {
+        return it->second;
+    }
+    return nullptr;
+}
+
+std::vector<Lecturer*> GradeManager::getAllLecturers() const 
+{
+    std::vector<Lecturer*> lecturerList;
+    for (const auto& pair : lecturersDatabase) {
+        lecturerList.push_back(pair.second);
+    }
+    return lecturerList;
+}
+
 // ==============================================================
 // NEW UI TRANSLATION METHODS
 // ==============================================================
-
-std::vector<Student *> GradeManager::getAllStudents() const
+std::vector<Student *> GradeManager::getAllStudentsAsList() const
 {
     std::vector<Student *> studentList;
     collectStudentsInOrder(root, studentList);

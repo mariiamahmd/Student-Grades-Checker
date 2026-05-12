@@ -1,9 +1,14 @@
 #pragma once
 #include "Student.hpp"
+#include "Course.hpp"
+#include "Lecturer.hpp" 
 #include "Types.hpp"
 #include <string>
 #include <map>
+#include <unordered_map>
 #include <vector>
+
+using namespace std;
 
 // Node structure declaration for the Binary Search Tree
 struct TreeNode
@@ -21,21 +26,24 @@ class GradeManager
 private:
     TreeNode *root; // Root of the Student BST
 
+    // NEW: Course & Lecturer Hash Map Storage
+    std::unordered_map<std::string, Course *> coursesDatabase; // Key: Course Code
+    std::unordered_map<int, Lecturer *> lecturersDatabase;     // Key: Lecturer ID
+
     // Private helper functions for recursive BST operations
     TreeNode *insertHelper(TreeNode *node, const Student &newStudent);
     TreeNode *searchHelper(TreeNode *node, int id) const;
 
     // Deletion helpers
     TreeNode *deleteHelper(TreeNode *node, int id);
-    TreeNode *findInOrderSuccessor(TreeNode *node) const; // Finds the in-order successor
+    TreeNode *findInOrderSuccessor(TreeNode *node) const;
 
     // Traversal and memory management
     void inorderTraversal(TreeNode *node) const;
     void destroyTree(TreeNode *node);
 
     // Habiba: Helper to collect students for the UI -->
-    void collectStudentsInOrder(TreeNode *node, std::vector<Student*> &studentList) const;
-
+    void collectStudentsInOrder(TreeNode *node, std::vector<Student *> &studentList) const;
 
 public:
     // Constructor & Destructor
@@ -44,11 +52,7 @@ public:
 
     // Core Student Operations (Using BST)
     void addStudent(int id, const string &name);
-
-    // Returns a pointer so the student object can be modified in memory
     Student *searchStudent(int id) const;
-
-    // Removes a student from the tree
     bool deleteStudent(int id);
 
     // ==========================================
@@ -61,17 +65,20 @@ public:
     // Updates the grade for a specific course the student is taking
     bool gradeStudentCourse(int studentId, const string& courseCode, float grade);
 
-    // Display operations (Terminal only)
-    void displayAllStudents() const;
+    // NEW: Course & Lecturer Operations
+    void addCourse(Course *newCourse);
+    Course *searchCourse(const std::string &courseCode) const;
+    std::vector<Course *> getAllCourses() const;
 
-    void collectStudents(TreeNode* node, vector<Student*>& students) const;
+    void addLecturer(Lecturer *newLecturer);
+    Lecturer *searchLecturer(int id) const;
+    std::vector<Lecturer *> getAllLecturers() const;
+    bool deleteLecturer(int id);
 
-    vector<Student*> getTopStudentsByCGPA(int topN = 10) const; //get top students in report page
+    // UI Fetchers & Reports
+    vector<Student *> getTopStudentsByCGPA(int topN = 10) const;
     void getPassFailReport(int &passCount, int &failCount, float passingGPA = 2.0) const;
     map<string, int> getGradeDistribution() const;
-    vector<Student*> getAllStudentsAsList() const;
-
-    // Habiba: GUI Fetcher -->
-    // Returns a flat list of pointers to all students sorted by ID
-    std::vector<Student*> getAllStudents() const;
+    std::vector<Student *> getAllStudentsAsList() const;
+    bool deleteCourse(const std::string& courseCode);
 };

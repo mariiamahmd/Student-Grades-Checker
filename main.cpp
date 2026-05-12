@@ -60,8 +60,7 @@ int main(int argc, char *argv[])
     manager.gradeStudentCourse(1005, "MAT101", 3.9);
 
 
-    MainWindow w;
-
+    MainWindow w(&manager);
     w.show();
 
 

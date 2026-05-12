@@ -17,6 +17,8 @@ public:
     int getID() const;
     const std::string &getName() const;
     const std::string &getDepartment() const;
+    void setName(const std::string &newName) { name = newName; }
+    void setDepartment(const std::string &newDept) { department = newDept; }
 
     // Display prototype
     // void displayInfo() const;
